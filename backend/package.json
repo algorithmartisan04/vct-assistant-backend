@@ -20,6 +20,8 @@
   },
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.675.0",
+    "@aws-sdk/credential-provider-node": "^3.675.0",
+    "@aws-sdk/credential-providers": "^3.675.0",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "node": "^22.10.0"

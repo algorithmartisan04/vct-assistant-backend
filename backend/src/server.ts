@@ -1,5 +1,6 @@
 import express, { Express } from "express";
 import { BedrockRuntimeClient } from "@aws-sdk/client-bedrock-runtime";
+import { fromNodeProviderChain } from "@aws-sdk/credential-providers";
 import { Request, Response, NextFunction } from 'express';
 const app: Express = express();
 const port: number = Number(process.env.PORT_NUM) || 8088;
@@ -8,7 +9,7 @@ const port: number = Number(process.env.PORT_NUM) || 8088;
 app.use(express.json());
 
 // Initialize AWS Bedrock client
-const bedrockClient = new BedrockRuntimeClient({ region: "us-west-2" }); // Replace with your AWS region
+const bedrockClient = new BedrockRuntimeClient({ region: "us-west-2", credentials: fromNodeProviderChain() }); // Replace with your AWS region
 
 // POST /api/query: Accept user questions and forward them to Amazon Bedrock
 app.post("/api/query", async (req: Request, res: Response) => {
