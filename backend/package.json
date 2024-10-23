@@ -11,6 +11,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/dotenv": "^6.1.1",
     "@types/express": "^5.0.0",
     "@types/node": "^22.7.8",
@@ -19,9 +20,12 @@
     "typescript": "^5.6.3"
   },
   "dependencies": {
-    "@aws-sdk/client-bedrock-runtime": "^3.675.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.677.0",
     "@aws-sdk/credential-provider-node": "^3.675.0",
     "@aws-sdk/credential-providers": "^3.675.0",
+    "@aws-sdk/middleware-retry": "^3.370.0",
+    "@aws-sdk/util-retry": "^3.370.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "node": "^22.10.0"
