@@ -17,37 +17,35 @@ export default function ChatInterface() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
-
-    const userMessage: Message = { role: "user", content: input };
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
+    if (isLoading || !input.trim()) return; // Prevent multiple submits
+    console.log("Submitting form, input: ", input);
     setIsLoading(true);
+    setInput("");
+    const userMessage = { role: "user", content: input };
+    setMessages((prev: any) => [...prev, userMessage]);
 
-    // Simulate API call
-    setTimeout(() => {
-      const assistantMessage: Message = {
-        role: "assistant",
-        content: `This is a simulated response to: "${input}"`,
-      };
-      setMessages((prev) => [...prev, assistantMessage]);
-      setIsLoading(false);
-    }, 1000);
-
-    // TODO: Replace with actual API call
-    // try {
-    //   const response = await fetch('/api/chat', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ message: input }),
-    //   })
-    //   const data = await response.json()
-    //   setMessages(prev => [...prev, { role: 'assistant', content: data.message }])
-    // } catch (error) {
-    //   console.error('Error:', error)
-    // } finally {
-    //   setIsLoading(false)
-    // }
+    // Add artificial delay (e.g., 1 second)
+    setTimeout(async () => {
+      try {
+        const response = await fetch("http://localhost:8088/api/query", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({ message: input }),
+        });
+        const data = await response.json();
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: data.message },
+        ]);
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }, 1000); // 1-second delay between requests
   };
 
   return (
